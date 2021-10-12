@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use Illuminate\Database\Connectors\PostgresConnector;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,8 @@ Route::resource('posts', PostController::class)
 
 Route::resource('posts', PostController::class)
     ->only(['show', 'index']);
+
+Route::get('/posts/like/{id}', [LikeController::class, 'like'])->name('like');
+Route::get('/posts/unlike/{id}', [LikeController::class, 'unlike'])->name('unlike');
 
 require __DIR__.'/auth.php';

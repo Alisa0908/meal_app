@@ -8,17 +8,31 @@
                 {{ $post->title }}</h2>
             <h3>{{ $post->user->name }}</h3>
             <p class="text-sm mb-2 md:text-base font-normal text-gray-600">
-                <span
-                    class="text-red-400 font-bold">{{ date('Y-m-d H:i:s', strtotime('-1 day')) < $post->created_at ? 'NEW' : '' }}</span>
-                {{ $post->created_at }}
+                現在時刻: <span class="text-red-400 font-bold">{{ date('Y-m-d H:i:s') }}</span>
+            </p>
+            <p class="text-sm mb-2 md:text-base font-normal text-gray-600">
+                記事作成日: {{ $passed }}
             </p>
             <img src="{{ $post->image_url }}" alt="alt" class="mb-4">
             <p class="text-gray-700 text-base">{!! nl2br(e($post->body)) !!}</p>
         </article>
+
+        {{-- お気に入り登録 --}}
+        <div>
+            @if ($like)
+                <a href="{{ route('unlike', $post) }}"
+                    class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り削除</a>
+            @else
+                <a href="{{ route('like', $post) }}"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り登録</a>
+            @endif
+            <p class="font-bold text-base mt-2">お気に入り数: {{ $post->likes->count() }}</p>
+        </div>
+        {{-- 編集 & 削除 --}}
         <div class="flex flex-row text-center my-4">
             @can('update', $post)
                 <a href="{{ route('posts.edit', $post) }}"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                    class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
             @can('delete', $post)
                 <form action="{{ route('posts.destroy', $post) }}" method="post">

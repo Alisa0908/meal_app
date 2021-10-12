@@ -34,22 +34,22 @@
                         <!-- Authentication -->
                         @auth
                             <x-dropdown-link :href="route('posts.create')">
-                                {{ __('Create Post') }}
+                                {{ __('新規投稿') }}
                             </x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('ログアウト') }}
                                 </x-dropdown-link>
                             </form>
                         @else
                             <x-dropdown-link :href="route('register')">
-                                {{ __('Sign Up') }}
+                                {{ __('登録') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('login')">
-                                {{ __('Log In') }}
+                                {{ __('ログイン') }}
                             </x-dropdown-link>
                         @endauth
                     </x-slot>
