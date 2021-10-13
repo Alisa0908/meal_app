@@ -23,6 +23,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/posts/like/{id}', [LikeController::class, 'like'])->name('like');
+Route::get('/posts/unlike/{id}', [LikeController::class, 'unlike'])->name('unlike');
+
 Route::resource('posts', PostController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
@@ -30,7 +33,5 @@ Route::resource('posts', PostController::class)
 Route::resource('posts', PostController::class)
     ->only(['show', 'index']);
 
-Route::get('/posts/like/{id}', [LikeController::class, 'like'])->name('like');
-Route::get('/posts/unlike/{id}', [LikeController::class, 'unlike'])->name('unlike');
 
 require __DIR__.'/auth.php';

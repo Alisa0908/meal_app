@@ -18,8 +18,8 @@
         </article>
 
         {{-- お気に入り登録 --}}
-        {{-- <div>
-            @if ($like)
+        <div>
+            @if (!empty($like))
                 <a href="{{ route('unlike', $post) }}"
                     class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り削除</a>
             @else
@@ -27,7 +27,7 @@
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り登録</a>
             @endif
             <p class="font-bold text-base mt-2">お気に入り数: {{ $post->likes->count() }}</p>
-        </div> --}}
+        </div>
         {{-- 編集 & 削除 --}}
         <div class="flex flex-row text-center my-4">
             @can('update', $post)

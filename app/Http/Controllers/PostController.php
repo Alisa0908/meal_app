@@ -96,8 +96,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // dd(auth()->user()->id);
-        // $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
+        $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
         $create_time = $post->created_at;
         $today = date("Y-m-d H:i:s");
 
@@ -114,8 +113,7 @@ class PostController extends Controller
             $passed = $post->created_at->format('Y年m月d日');
         }
 
-        // return view('posts.show', compact('post', 'like', 'passed'));
-        return view('posts.show', compact('post', 'passed'));
+        return view('posts.show', compact('post', 'like', 'passed'));
     }
 
     /**
