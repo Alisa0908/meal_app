@@ -1,3 +1,11 @@
+<script type="text/javascript">
+    $(function() {
+        $('a.disabled').on('click', function() {
+            $('a.disabled').prop('disabled', true);
+        });
+    });
+</script>
+
 <x-app-layout>
     <div class="container lg:w-3/4 md:w-4/5 w-11/12 mx-auto my-8 px-8 py-4 bg-white shadow-md">
 
@@ -19,12 +27,12 @@
 
         {{-- お気に入り登録 --}}
         <div>
-            @if (!empty($like))
+            @if ($like)
                 <a href="{{ route('unlike', $post) }}"
                     class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り削除</a>
             @else
                 <a href="{{ route('like', $post) }}"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り登録</a>
+                    class="disabled bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り登録</a>
             @endif
             <p class="font-bold text-base mt-2">お気に入り数: {{ $post->likes->count() }}</p>
         </div>

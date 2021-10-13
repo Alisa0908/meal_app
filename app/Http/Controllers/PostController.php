@@ -96,7 +96,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
+        if (!empty(auth()->user()->id)) {
+            $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
+        } else {
+            $like = null;
+        }
         $create_time = $post->created_at;
         $today = date("Y-m-d H:i:s");
 

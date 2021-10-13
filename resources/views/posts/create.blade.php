@@ -20,8 +20,8 @@
                     カテゴリー
                 </label>
                 @foreach ($categories as $category)
-                    <input type="radio" id="category_id" name="category_id" value="{{ $category->id }}" @if (old('category') == $category->id) checked @endif>
-                    <label for="category_id">{{ $category->name }}</label>
+                    <input type="radio" id="{{ $category->id }}" name="category_id" value="{{ $category->id }}" @if (old('category') == $category->id) checked @endif>
+                    <label for="{{ $category->id }}">{{ $category->name }}</label>
                     <br>
                 @endforeach
             </div>
