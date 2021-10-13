@@ -22,28 +22,26 @@ class PostController extends Controller
     {
         $posts = Post::with('user')->latest()->paginate(4);
 
-        // $create_time = $post->created_at;
-        // $today = date("Y-m-d H:i:s");
-
-        // dd($post->created_at);
+        $create_time = $post->created_at;
+        $today = date("Y-m-d H:i:s");
 
         //  1時間以内は分表示    
         //  1日以内は時間表示 
         //  1月以内は日数表示 
         //  1年以内は月表示 
 
-        // $diff = $create_time->diff($today);
-        // if ($diff->format('%i') < 60) {
-        //     $passed = $diff->format('%i分前');
-        // } elseif ($diff->format('%h') < 24) {
-        //     $passed = $diff->format('%h時間前');
-        // } elseif ($diff->format('%d') < 31) {
-        //     $passed = $diff->format('%d日前');
-        // } elseif ($diff->format('%m月前') < 12) {
-        //     $passed = $diff->format('%m月前');
-        // } else {
-        //     $passed = '1年以上前';
-        // }
+        $diff = $create_time->diff($today);
+        if ($diff->format('%i') < 60) {
+            $passed = $diff->format('%i分前');
+        } elseif ($diff->format('%h') < 24) {
+            $passed = $diff->format('%h時間前');
+        } elseif ($diff->format('%d') < 31) {
+            $passed = $diff->format('%d日前');
+        } elseif ($diff->format('%m月前') < 12) {
+            $passed = $diff->format('%m月前');
+        } else {
+            $passed = '1年以上前';
+        }
 
         return view('posts.index', compact('posts'));
         // return view('posts.index', compact('posts', 'passed'));
@@ -103,8 +101,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        dd(auth()->user()->id);
-        $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
+        // dd(auth()->user()->id);
+        // $like = Like::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
 
 
         $create_time = $post->created_at;
@@ -118,13 +116,13 @@ class PostController extends Controller
         }elseif ($diff->format('%m') < 1) {
             $passed = $diff->format('%d日前');
         }elseif ($diff->format('%y') <1) {
-            $passed = $diff->format('%m月前');
+            $passed = $diff->format('%mヵ月前');
         }else {
-            $passed = '1年以上前';
+            $passed = $post->created_at->format('Y年m月d日');
         }
 
-        return view('posts.show', compact('post', 'like', 'passed'));
         // return view('posts.show', compact('post', 'like', 'passed'));
+        return view('posts.show', compact('post', 'passed'));
     }
 
     /**
@@ -155,7 +153,7 @@ class PostController extends Controller
 
         $file = $request->file('image');
         if ($file) {
-            $delete_file_path = $post->image_url;
+            $delete_file_path = $post->image_path;
             $post->image = self::createFileName($file);
         }
         $post->fill($request->all());
