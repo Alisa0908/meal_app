@@ -21,25 +21,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('user')->latest()->paginate(4);
-        foreach ($posts as $post) {
-            $create_time = $post->created_at;
-        }
-        $today = date("Y-m-d H:i:s");
 
-        $diff = $create_time->diff($today);
-        if ($diff->format('%h') < 1) {
-            $passed = $diff->format('%i分前');
-        } elseif ($diff->format('%d') < 1) {
-            $passed = $diff->format('%h時間前');
-        } elseif ($diff->format('%m') < 1) {
-            $passed = $diff->format('%d日前');
-        } elseif ($diff->format('%y') < 1) {
-            $passed = $diff->format('%mヵ月前');
-        } else {
-            $passed = $post->created_at->format('Y年m月d日');
-        }
-
-        return view('posts.index', compact('posts', 'passed'));
+        return view('posts.index', compact('posts'));
     }
 
     /**

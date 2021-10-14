@@ -23,8 +23,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/posts/like/{post}', [LikeController::class, 'like'])->name('like');
-Route::get('/posts/unlike/{post}', [LikeController::class, 'unlike'])->name('unlike');
+Route::resource('posts.likes', LikeController::class)
+    ->only(['store', 'destroy'])
+    ->middleware('auth');
+
 
 Route::resource('posts', PostController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])

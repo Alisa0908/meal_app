@@ -27,13 +27,22 @@
 
         {{-- お気に入り登録 --}}
         <div>
+            @auth
             @if ($like)
-                <a href="{{ route('unlike', $post) }}"
-                    class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り削除</a>
+            <form action="{{ route('posts.likes.destroy', [$post, $like]) }}" method="post">
+                @csrf
+                @method('delete')
+                <input type="submit" value="お気に入り削除"
+                    class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-40 mr-2">
+            </form>
             @else
-                <a href="{{ route('like', $post) }}"
-                    class="disabled bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">お気に入り登録</a>
+            <form action="{{ route('posts.likes.store', $post) }}" method="post">
+                @csrf
+                <input type="submit" value="お気に入り登録"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-40 mr-2">
+                    </form>
             @endif
+            @endauth
             <p class="font-bold text-base mt-2">お気に入り数: {{ $post->likes->count() }}</p>
         </div>
         {{-- 編集 & 削除 --}}
